@@ -1,0 +1,407 @@
+{
+  "info": {
+    "name": "E-commerce Product API",
+    "description": "Complete API collection for testing product endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{authToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5001/api",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "productId",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Register Admin User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@test.com\",\n  \"password\": \"admin123\",\n  \"role\": \"admin\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    pm.environment.set('authToken', pm.response.json().token);",
+                  "    console.log('Admin user registered successfully');",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Login Admin User",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@test.com\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    pm.environment.set('authToken', pm.response.json().token);",
+                  "    console.log('Admin user logged in successfully');",
+                  "}"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Create Product - iPhone 15 Pro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"iPhone 15 Pro\",\n  \"description\": \"Latest iPhone with A17 Pro chip, titanium design, and advanced camera system\",\n  \"price\": 999.99,\n  \"category\": \"Electronics\",\n  \"stock\": 25,\n  \"images\": [\n    \"https://example.com/iphone15pro-1.jpg\",\n    \"https://example.com/iphone15pro-2.jpg\",\n    \"https://example.com/iphone15pro-3.jpg\"\n  ],\n  \"specifications\": {\n    \"color\": \"Natural Titanium\",\n    \"storage\": \"128GB\",\n    \"screen\": \"6.1 inch Super Retina XDR\",\n    \"camera\": \"48MP Main + 12MP Ultra Wide + 12MP Telephoto\"\n  },\n  \"tags\": [\"smartphone\", \"apple\", \"5g\", \"camera\"],\n  \"rating\": 4.8,\n  \"reviews\": 156\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            }
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    pm.environment.set('productId', pm.response.json()._id);",
+                  "    console.log('Product created successfully');",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Create Product - MacBook Pro",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"MacBook Pro 14-inch\",\n  \"description\": \"Powerful laptop with M3 Pro chip, perfect for professionals and creators\",\n  \"price\": 1999.99,\n  \"category\": \"Electronics\",\n  \"stock\": 12,\n  \"images\": [\n    \"https://example.com/macbookpro-1.jpg\",\n    \"https://example.com/macbookpro-2.jpg\"\n  ],\n  \"specifications\": {\n    \"color\": \"Space Gray\",\n    \"storage\": \"512GB SSD\",\n    \"memory\": \"16GB Unified Memory\",\n    \"processor\": \"M3 Pro chip\",\n    \"display\": \"14.2-inch Liquid Retina XDR\"\n  },\n  \"tags\": [\"laptop\", \"macbook\", \"apple\", \"professional\"],\n  \"rating\": 4.9,\n  \"reviews\": 234\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            }
+          }
+        },
+        {
+          "name": "Create Product - Nike Shoes",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Nike Air Max 270\",\n  \"description\": \"Comfortable running shoes with Air Max technology and breathable mesh\",\n  \"price\": 129.99,\n  \"category\": \"Sports\",\n  \"stock\": 45,\n  \"images\": [\n    \"https://example.com/nikeairmax-1.jpg\",\n    \"https://example.com/nikeairmax-2.jpg\"\n  ],\n  \"specifications\": {\n    \"color\": \"White/Black\",\n    \"size\": \"US 10\",\n    \"material\": \"Mesh and synthetic\",\n    \"sole\": \"Rubber\",\n    \"closure\": \"Lace-up\"\n  },\n  \"tags\": [\"shoes\", \"nike\", \"running\", \"athletic\"],\n  \"rating\": 4.6,\n  \"reviews\": 312\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            }
+          }
+        },
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"]
+            }
+          }
+        },
+        {
+          "name": "Get Products with Pagination",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products?page=1&limit=5",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products?search=iPhone",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "iPhone"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Filter Products by Category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products?category=Electronics",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Electronics"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Sort Products by Price (High to Low)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products?sort=price&order=desc",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "sort",
+                  "value": "price"
+                },
+                {
+                  "key": "order",
+                  "value": "desc"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "{{productId}}"]
+            }
+          }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"iPhone 15 Pro (Updated)\",\n  \"price\": 1099.99,\n  \"stock\": 30,\n  \"description\": \"Updated description for iPhone 15 Pro\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "{{productId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products/{{productId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "{{productId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products/categories",
+              "host": ["{{baseUrl}}"],
+              "path": ["products", "categories"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Advanced Queries",
+      "item": [
+        {
+          "name": "Search + Category + Sort",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products?search=phone&category=Electronics&sort=price&order=asc&page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "phone"
+                },
+                {
+                  "key": "category",
+                  "value": "Electronics"
+                },
+                {
+                  "key": "sort",
+                  "value": "price"
+                },
+                {
+                  "key": "order",
+                  "value": "asc"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Price Range Filter",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/products?minPrice=100&maxPrice=1000",
+              "host": ["{{baseUrl}}"],
+              "path": ["products"],
+              "query": [
+                {
+                  "key": "minPrice",
+                  "value": "100"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "1000"
+                }
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
+
+
+

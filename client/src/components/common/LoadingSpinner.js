@@ -1,0 +1,35 @@
+import React from 'react';
+
+const LoadingSpinner = ({ size = 'md', color = 'primary', className = '' }) => {
+  const sizeClasses = {
+    sm: 'w-4 h-4',
+    md: 'w-8 h-8',
+    lg: 'w-12 h-12',
+    xl: 'w-16 h-16'
+  };
+
+  const colorClasses = {
+    primary: 'border-primary',
+    secondary: 'border-secondary',
+    white: 'border-white',
+    gray: 'border-gray-400'
+  };
+
+  return (
+    <div className={`flex justify-center items-center ${className}`}>
+      <div
+        className={`${sizeClasses[size]} border-4 border-gray-200 border-t-${colorClasses[color]} rounded-full animate-spin`}
+        role="status"
+        aria-label="Loading"
+      >
+        <span className="sr-only">Loading...</span>
+      </div>
+    </div>
+  );
+};
+
+export default LoadingSpinner;
+
+
+
+
