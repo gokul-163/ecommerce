@@ -63,6 +63,8 @@ A modern, full-stack e-commerce application built with the MERN stack (MongoDB, 
 - **Nodemon** - Development server
 - **Concurrently** - Run multiple commands
 
+![alt text](<output.png>)
+
 ## 📦 Installation
 
 ### Prerequisites
