@@ -4,6 +4,8 @@ A modern, full-stack e-commerce application built with the MERN stack (MongoDB, 
 
 ## 🚀 Features
 
+
+![alt text](Banner.png)
 ### Frontend (React.js)
 - **Modern UI/UX**: Beautiful, responsive design with smooth animations
 - **Product Catalog**: Advanced filtering, sorting, and search functionality
